@@ -1,0 +1,23 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+  port: 8083
+  servlet:
+    context-path: /api/v1
+spring:
+  datasource:
+    username: root
+    password: Hackfest
+    url: jdbc:mysql://mysql-springboot-container:3306/HackfestDB
+    tomcat:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: update
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  security:
+    user:
+      name: admin
+      password: admin

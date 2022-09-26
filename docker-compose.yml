@@ -1,0 +1,46 @@
+version: '3.9'
+services:
+  database:
+    image: mysql:8.0.30
+    container_name: mysql-springboot-container
+    ports:
+#      - 3310:3306
+      - ${DB_PORT:-3310}:3306
+    volumes:
+      - mysql-springboot-data:/var/lib/mysql
+      - mysql-springboot-config-deamond:/etc/mysql/conf.d
+    environment:
+#      MYSQL_DATABASE: HackfestDB
+#      MYSQL_USER: admin
+#      MYSQL_PASSWORD: Hackfest
+#      MYSQL_ROOT_PASSWORD: Hackfest
+#      - TZ=${TZ:-Asia/Ho_Chi_Minh}
+      - MYSQL_DATABASE=${DB_DATABASE:-HackfestDB}
+      - MYSQL_USER=${DB_USERNAME:-admin}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-Hackfest}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-Hackfest}
+      - TZ=${TZ:-Asia/Ho_Chi_Minh}
+    networks:
+      - backend
+    stdin_open: true
+    tty: true
+    restart: always
+  app:
+    image: guenhain163/springboot-docker:v1.0.0
+    container_name: springboot-docker-container
+    ports:
+#      - 8085:8083
+      - ${APP_PORT:-8085}:8083
+    volumes:
+      - ./:/app
+    networks:
+      - backend
+    restart: always
+
+networks:
+  backend:
+    name: springboot-app-network
+volumes:
+  mysql-springboot-data:
+  mysql-springboot-config-deamond:
+
